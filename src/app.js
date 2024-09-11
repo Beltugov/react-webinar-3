@@ -1,5 +1,4 @@
 import React from 'react';
-import { createElement } from './utils.js';
 import './styles.css';
 
 /**
@@ -28,6 +27,7 @@ function App({ store }) {
               >
                 <div className="Item-code">{item.code}</div>
                 <div className="Item-title">{item.title}</div>
+                {item.selectedCount > 0 && <div className="Item-count">Выделяли {item.selectedCount} раз</div>}
                 <div className="Item-actions">
                   <button onClick={() => store.deleteItem(item.code)}>Удалить</button>
                 </div>
