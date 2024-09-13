@@ -11,7 +11,7 @@ const store = new Store({
     { code: 4, title: 'Очень длинное название элемента из семи слов', selectedCount: 0 },
     { code: 5, title: 'Запись', selectedCount: 0 },
     { code: 6, title: 'Шестая запись', selectedCount: 0 },
-    { code: 10, title: 'Седьмая запись' , selectedCount: 0},
+    { code: 7, title: 'Седьмая запись' , selectedCount: 0},
   ],
 });
 

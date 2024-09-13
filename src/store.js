@@ -5,9 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-
-    this.uniqCode = new Set();
-    this.state.list.forEach((item) => this.uniqCode.add(item.code))
+    this.nextCode = initState.list[initState.list.length - 1].code + 1;
   }
 
   /**
@@ -45,28 +43,9 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
-    const generateUniqCode = (uniqCodeSet) => {
-      let generatedCode = uniqCodeSet.size;
-      while (uniqCodeSet.has(generatedCode)) {
-        generatedCode++;
-      }
-      return generatedCode;
-    }
-
-    let uniqCode;
-
-    if (this.uniqCode.has(this.uniqCode.size + 1)) {
-      uniqCode = generateUniqCode(this.uniqCode);
-    } else {
-      uniqCode = this.uniqCode.size + 1;
-    }
-    this.uniqCode.add(uniqCode)
-
-
-
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: uniqCode, title: 'Новая запись' , selectedCount: 0}],
+      list: [...this.state.list, { code: this.nextCode++ , title: 'Новая запись' , selectedCount: 0}],
     });
   }
 
