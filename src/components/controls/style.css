@@ -1,5 +1,11 @@
 .Controls {
   display: flex;
   justify-content: flex-end;
+  gap: 20px;
   padding: 20px;
+}
+
+.Controls-amount {
+  font-weight: bold;
+  margin-left: 12px;
 }

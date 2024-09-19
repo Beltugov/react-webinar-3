@@ -2,20 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function Controls({ onAdd }) {
+function Controls({ modalIsOpen, cardList, totalPrice } = {
+  modalIsOpen: () => {},
+}) {
   return (
     <div className="Controls">
-      <button onClick={() => onAdd()}>Добавить</button>
+      <div>В корзине:<span className="Controls-amount">{cardList.length === 0 ? "пусто" : cardList.length + " товара / " + totalPrice + " ₽"}</span></div>
+      <button onClick={() => modalIsOpen(true)}>Перейти</button>
     </div>
   );
 }
 
 Controls.propTypes = {
-  onAdd: PropTypes.func,
+  modalIsOpen: PropTypes.func,
 };
 
-Controls.defaultProps = {
-  onAdd: () => {},
-};
 
 export default React.memo(Controls);
