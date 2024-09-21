@@ -5,6 +5,7 @@ import Head from './components/head';
 import PageLayout from './components/page-layout';
 import Modal from "./components/modal";
 import Card from "./components/card";
+import Item from "./components/item";
 
 
 /**
@@ -14,48 +15,41 @@ import Card from "./components/card";
  */
 function App({store}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [cardList, setCardList] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
 
   const list = store.getState().list;
+  const card = store.getState().card
 
   const callbacks = {
     addItem: useCallback((item) => {
-      const cardItem = cardList.find((value) => value.code === item.code)
-      if (!cardItem) {
-        item.count = 1
-        setCardList([...cardList, item])
-      } else {
-        setCardList(cardList.map((value) => {
-          if (value.code === cardItem.code) value.count++
-          return value
-        }))
-      }
-    }, [cardList]),
+      store.addItemInCard(item.code)
+    }, [card]),
 
     deleteItem: useCallback((item) => {
-      setCardList(cardList.filter((value) => value.code !== item.code))
-    }, [cardList]),
+      store.deleteItem(item.code)
+    }, [card]),
 
     modalAction: (state) => setModalIsOpen(state)
   };
 
   useEffect(() => {
-    const price = cardList.reduce((acc, currentValue) => acc + currentValue.price * currentValue.count, 0)
+    const price = card.reduce((acc, currentValue) => acc + currentValue.price * currentValue.count, 0)
     setTotalPrice(price)
-  }, [cardList])
+  }, [card])
 
 
   return (
     <PageLayout>
       <Head title="Магазин"/>
-      <Controls modalIsOpen={callbacks.modalAction} cardList={cardList} totalPrice={totalPrice}/>
+      <Controls modalIsOpen={callbacks.modalAction} cardList={card} totalPrice={totalPrice}/>
       <List
         list={list}
         onClick={callbacks.addItem}
+        comp={(item, onClick) => <Item item={item} onClick={onClick} />}
       />
       <Modal isOpen={modalIsOpen}>
-        <Card cardList={cardList} modalIsOpen={callbacks.modalAction} onClick={callbacks.deleteItem} totalPrice={totalPrice}/>
+        <Card cardList={card} modalIsOpen={callbacks.modalAction} onClick={callbacks.deleteItem}
+              totalPrice={totalPrice}/>
       </Modal>
     </PageLayout>
   );

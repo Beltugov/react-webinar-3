@@ -1,0 +1,27 @@
+.CardItem {
+  display: flex;
+  justify-content: flex-start;
+  transition: background-color 1s;
+}
+
+.CardItem-code {
+  padding: 20px 10px 20px 20px;
+}
+
+.CardItem-title {
+  width: 100%;
+  padding: 20px 10px;
+}
+
+.CardItem-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 20px 10px;
+  gap: 24px;
+}
+
+.CardItem-info {
+  display: flex;
+  gap: 62px;
+  white-space: nowrap;
+}

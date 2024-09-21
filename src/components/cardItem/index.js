@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-function Item(props = {
+function CardItem(props = {
   onClick: () => {
   }
 }) {
@@ -14,20 +14,21 @@ function Item(props = {
   };
 
   return (
-    <div className='Item'>
-      <div className="Item-code">{props.item.code}</div>
-      <div className="Item-title">{props.item.title}</div>
-      <div className="Item-actions">
-        <div className="Item-info">
+    <div className='CardItem'>
+      <div className="CardItem-code">{props.item.code}</div>
+      <div className="CardItem-title">{props.item.title}</div>
+      <div className="CardItem-actions">
+        <div className="CardItem-info">
           <span>{new Intl.NumberFormat("ru-RU", {style: "currency", currency: "RUB", maximumFractionDigits: 0}).format(props.item.price)}</span>
+          <span>{props.item.count | 0} шт</span>
         </div>
-        <button onClick={callbacks.onClick}>Добавить</button>
+        <button onClick={callbacks.onClick}>Удалить</button>
       </div>
     </div>
   );
 }
 
-Item.propTypes = {
+CardItem.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
@@ -40,4 +41,4 @@ Item.propTypes = {
 };
 
 
-export default React.memo(Item);
+export default React.memo(CardItem);

@@ -31,6 +31,50 @@ class Store {
   }
 
   /**
+   * Получение записи по коду
+   * @param code
+   */
+  getItem(code) {
+      return this.state.list.find((value) => value.code === code)
+  }
+
+  /**
+   * Получение записи по коду из корзины
+   * @param code
+   */
+  getCardItem(code) {
+    return this.state.card.find((value) => value.code === code)
+  }
+
+
+  /**
+   * Добавление новой записи в корзину
+   * @param code
+   */
+  addItemInCard(code) {
+    const inCard = this.getCardItem(code)
+    const item = this.getItem(code)
+    let card = this.state.card
+
+    if (inCard) {
+      card = card.map((elem) => {
+        if (elem.code === code) elem.count = elem.count + 1
+        return elem
+      })
+    } else {
+      item.count = 1;
+      card = [...card, item]
+    }
+
+    this.setState({
+      ...this.state,
+      card: card
+    });
+  }
+
+
+
+  /**
    * Установка состояния
    * @param newState {Object}
    */
@@ -41,9 +85,9 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Создание новой записи
    */
-  addItem() {
+  createItem() {
     this.setState({
       ...this.state,
       list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
@@ -51,14 +95,13 @@ class Store {
   }
 
   /**
-   * Удаление записи по коду
+   * Удаление записи по коду из корзины
    * @param code
    */
   deleteItem(code) {
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code),
+      card: this.state.card.filter(item => item.code !== code),
     });
   }
 

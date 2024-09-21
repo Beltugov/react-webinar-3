@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
 import './style.css';
 
-function List({ list, onClick, type } = {
+
+function List({ list, onClick, comp } = {
   onClick: () => {},
+
 }) {
+  console.log()
   return (
     <div className="List">
       {list.map(item => (
         <div key={item.code} className="List-item">
-          <Item item={item} onClick={onClick} type={type} />
+          {comp(item, onClick)}
         </div>
       ))}
     </div>
@@ -24,7 +26,7 @@ List.propTypes = {
     }),
   ).isRequired,
   onClick: PropTypes.func,
-  type: PropTypes.string
+  comp: PropTypes.func
 };
 
 export default React.memo(List);
