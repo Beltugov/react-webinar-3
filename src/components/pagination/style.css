@@ -1,0 +1,26 @@
+.Page {
+  display: flex;
+  justify-content: end;
+  padding: 22px 21px;
+}
+
+.Page-btn{
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.Page-btn:hover {
+  background-color: #E1E1E1;
+}
+
+.Page-dots {
+  color: #CCCCCC;
+  user-select: none;
+}
+
+.selected {
+  background-color: #0087E9;
+  color: white;
+}
+
