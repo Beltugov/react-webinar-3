@@ -1,5 +1,4 @@
 import {memo} from "react";
-import useStore from "../../store/use-store";
 import "./style.css"
 
 function Pagination ({perPage, count, currentPage, setPage}) {

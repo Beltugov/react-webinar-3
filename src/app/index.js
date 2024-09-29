@@ -1,6 +1,6 @@
 import Basket from './basket';
 import useSelector from '../store/use-selector';
-import {BrowserRouter, createBrowserRouter, RouterProvider} from "react-router-dom";
+import {BrowserRouter, createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
 import Main from "./main";
 import ItemPage from "./itemPage";
 
@@ -12,27 +12,14 @@ import ItemPage from "./itemPage";
 function App() {
   const activeModal = useSelector(state => state.modals.name);
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <>
-        <Main/>
-        {activeModal === 'basket' && <Basket/>}
-      </>,
-    },
-    {
-      path: "/:id",
-      element: <>
-        <ItemPage/>
-        {activeModal === 'basket' && <Basket/>}
-        </>
-    }
-  ]);
-
   return (
-    <>
-      <RouterProvider router={router}/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={"/"} element={<Main/>}/>
+        <Route path={"/articles/:id"} element={<ItemPage/>}/>
+      </Routes>
+        {activeModal === 'basket' && <Basket/>}
+    </BrowserRouter>
   );
 }
 

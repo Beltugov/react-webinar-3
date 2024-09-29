@@ -10,10 +10,13 @@ class Catalog extends StoreModule {
   initState() {
     return {
       list: [],
+      page: 1,
+      perPage: 10
     };
   }
 
-  async load(page= 1, perPage= 10) {
+  async load() {
+    const {page, perPage} = this.getState()
     const response = await fetch(`/api/v1/articles?limit=${perPage}&skip=${perPage * (page - 1)}&fields=items(_id, title, price),count`);
     const json = await response.json();
     this.setState(
@@ -24,6 +27,15 @@ class Catalog extends StoreModule {
       },
       'Загружены товары из АПИ',
     );
+  }
+
+  setPage(page) {
+    this.setState(
+      {
+        ...this.getState(),
+        page: page
+      }
+    )
   }
 }
 
