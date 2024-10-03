@@ -1,0 +1,15 @@
+.LoginForm {
+  padding: 20px;
+}
+.LoginForm-prop {
+  margin: 20px 0;
+}
+
+.LoginForm-label{
+  display: block;
+}
+
+.LoginForm-error {
+  margin: 20px 0;
+  color: #FF0000;
+}
