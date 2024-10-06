@@ -1,8 +1,14 @@
 .LoginForm {
-  padding: 20px;
+  padding: 15px 20px;
 }
 .LoginForm-prop {
   margin: 20px 0;
+}
+
+.LoginForm-input {
+  width: 192px;
+  padding: 3px;
+
 }
 
 .LoginForm-label{

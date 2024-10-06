@@ -1,8 +1,9 @@
-import {memo} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {memo, useCallback} from "react";
+import {Navigate} from "react-router-dom";
 import SideLayout from "../../components/side-layout";
 import useSelector from "../../hooks/use-selector";
 import useStore from "../../hooks/use-store";
+import LoginBtn from "../../components/login-btn";
 
 
 function AuthBtn() {
@@ -12,20 +13,13 @@ function AuthBtn() {
     user: state.user.data
   }))
 
-  const authAction = () => {
-    if (select.user !== null) store.actions.user.logout()
+  const callbacks =  {
+    onClick: useCallback(() => store.actions.user.logout(), [store])
   }
 
   return (
     <SideLayout side={"end"} padding={"long"}>
-      { select.user === null ? " " : <Link to={"/profile"}>{select.user.profile.name}</Link>}
-      <div className="Auth-btn">
-        <Link to={select.user === null ? "/login" : "/"}>
-          <button onClick={authAction}>
-            {select.user === null ? "Вход" : "Выход"}
-          </button>
-        </Link>
-      </div>
+      <LoginBtn user={select.user} authAction={callbacks.onClick}/>
     </SideLayout>
   )
 }

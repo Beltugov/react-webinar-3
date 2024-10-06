@@ -2,11 +2,9 @@ import StoreModule from "../module";
 
 class UserState extends StoreModule {
   initState() {
-    const token = localStorage.getItem("Token")
-    if (token !== null) this.check()
     return {
       data: null,
-      error: null
+      error: null,
     }
   }
 
@@ -27,10 +25,11 @@ class UserState extends StoreModule {
 
       if (!json.error) {
         localStorage.setItem("Token", json.result.token)
+
         this.setState({
           ...this.getState(),
           data: json.result.user,
-          error: null
+          error: null,
         })
       } else {
         this.setState({
@@ -57,12 +56,21 @@ class UserState extends StoreModule {
           "Content-type": "application/json"
         },
       })
+
       const json = await response.json()
 
-      if (!json.error) this.setState({
-        ...this.getState(),
-        data: json.result
-      })
+      if (!json.error) {
+        this.setState({
+          ...this.getState(),
+          data: json.result,
+          error: null
+        })
+      } else {
+        this.setState({
+          ...this.getState(),
+          error: json.error
+        })
+      }
     } catch (e) {
       this.setState({
         ...this.getState(),
@@ -90,6 +98,13 @@ class UserState extends StoreModule {
         data: null
       })
     }
+  }
+
+  resetError() {
+    this.setState({
+      ...this.getState(),
+      error: null
+    })
   }
 }
 

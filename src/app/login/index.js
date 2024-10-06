@@ -1,4 +1,4 @@
-import {memo, useCallback} from "react";
+import {memo, useCallback, useEffect} from "react";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
@@ -11,6 +11,10 @@ import useSelector from "../../hooks/use-selector";
 
 function Login() {
   const store = useStore()
+
+  useEffect(() => {
+    store.actions.user.resetError()
+  }, [])
 
   const select = useSelector((state) => ({
     error: state.user.error

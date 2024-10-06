@@ -14,7 +14,8 @@ function Profile() {
   const {t} = useTranslate()
 
   const select = useSelector((state) => ({
-    user: state.user.data
+    user: state.user.data,
+    profile: state.profile.profile
   }))
 
   useEffect(() => {
@@ -27,7 +28,7 @@ function Profile() {
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <ProfileInfo title={"Профиль"} user={select.user}/>
+      {(select.user && select.profile) ? <ProfileInfo title={"Профиль"} user={select.user} profile={select.profile}/> : ""}
     </PageLayout>
   )
 }

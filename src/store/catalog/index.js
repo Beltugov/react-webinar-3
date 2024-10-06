@@ -19,7 +19,6 @@ class CatalogState extends StoreModule {
         category: 'all',
       },
       count: 0,
-      categories: [],
       waiting: false,
     };
   }
@@ -93,15 +92,14 @@ class CatalogState extends StoreModule {
     if (params.category !== "all") apiParams['search[category]'] = params.category
 
     const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
-    const categories= await fetch('api/v1/categories?fields=_id,title,parent(_id)&limit=*')
+
     const json = await response.json();
-    const categoriesData = await categories.json()
+
     this.setState(
       {
         ...this.getState(),
         list: json.result.items,
         count: json.result.count,
-        categories: categoriesData.result.items,
         waiting: false,
       },
       'Загружен список товаров из АПИ',

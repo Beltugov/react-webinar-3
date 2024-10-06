@@ -1,10 +1,11 @@
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback, useEffect, useMemo} from 'react';
 import useTranslate from '../../hooks/use-translate';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
 import Select from '../../components/select';
 import Input from '../../components/input';
 import SideLayout from '../../components/side-layout';
+import {groupCategories} from "../../utils";
 
 /**
  * Контейнер со всеми фильтрами каталога
@@ -12,32 +13,17 @@ import SideLayout from '../../components/side-layout';
 function CatalogFilter() {
   const store = useStore();
 
+  useEffect(() => {
+    store.actions.category.getCategoryList()
+  }, [])
+
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
-    categories: state.catalog.categories,
+    categories: state.category.categories,
     category: state.catalog.params.category,
   }));
 
-  const groupCategories = (categories) => {
-    const parents = categories.filter((elem) => elem.parent === null)
-    let children = categories.filter((elem) => elem.parent !== null)
-
-    while (children.length !== 0) {
-      children = children.map((child) => {
-        child.title = "- " + child.title
-        return child
-      })
-
-      const  temp = [...parents]
-      temp.forEach((parent) => {
-        const index = parents.indexOf(parent)
-        parents.splice(index + 1, 0, ...children.filter((child) => child.parent._id === parent._id))
-        children = children.filter((child) => child.parent._id !== parent._id)
-      })
-    }
-    return parents
-  }
 
   const callbacks = {
     // Сортировка
@@ -64,7 +50,7 @@ function CatalogFilter() {
       () => [
         {value: 'all', title: 'Все'},
         ...groupCategories(select.categories).map((category) => ({value: category._id, title: category.title}))
-      ]
+      ], [select.categories]
     )
   };
 
@@ -80,6 +66,7 @@ function CatalogFilter() {
         onChange={callbacks.onSearch}
         placeholder={'Поиск'}
         delay={1000}
+        theme={"big"}
       />
       <button onClick={callbacks.onReset}>{t('filter.reset')}</button>
     </SideLayout>
