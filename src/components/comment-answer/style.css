@@ -1,0 +1,28 @@
+.CommentAnswer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.CommentAnswer-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.CommentAnswer-area {
+  width: 100%;
+  height: 76px;
+  padding: 5px;
+  font-size: 14px;
+  resize: none;
+}
+.CommentAnswer-action {
+  display: flex;
+  gap: 10px;
+}
+
+.CommentAnswer-cancel {
+  text-decoration: underline;
+  color: #666666;
+  cursor: pointer;
+}
