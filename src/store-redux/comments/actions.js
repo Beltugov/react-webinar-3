@@ -15,11 +15,10 @@ export default {
     }
   },
 
-  send: (id, text, type) => {
+  send: (id, text, type, token) => {
     return async (dispatch, getState, services) => {
-      const token = localStorage.getItem('token')
       try {
-        await services.api.request({
+        const res = await services.api.request({
           url: `api/v1/comments`,
           method: "POST",
           headers: {
@@ -33,6 +32,8 @@ export default {
             }
           })
         })
+        dispatch({type: "comments/add", payload: res.data.result})
+        console.log(res.data.result)
       } catch (e) {
         console.log(e)
       }

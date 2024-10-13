@@ -18,6 +18,8 @@
 
 .Comment-text {
   padding: 10px 0;
+  font-size: 14px;
+  word-wrap: break-word;
 }
 
 .Comment-button {
@@ -26,4 +28,5 @@
   border: none;
   color: #0087e9;
   cursor: pointer;
+  font-size: 12px;
 }
